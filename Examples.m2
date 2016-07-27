@@ -1,39 +1,50 @@
 ---------------------------------
---Not product of P^n's examples
+--List of Examples used in the paper "Computing characteristic classes of subschemes of smooth
+--complete toric varieties" by Martin Helmer
+---------------------------------
+
+---------------------------------
+--Example 1.1 from pg. 6
 --
 ---------------------------------
+--EX. 1.1
 TEST ///
 {*
     restart
     needsPackage "ToricSubschemeChar"
     needsPackage "NormalToricVarieties"
 *}
-    Rho = {{1,0,0},{0,1,0},{0,0,1},{-1,-1,0},{0,0,-1}}
-    Sigma = {{0,1,2},{1,2,3},{0,2,3},{0,1,4},{1,3,4},{0,3,4}}
-    kk=ZZ/32749;
-    X = normalToricVariety(Rho,Sigma,CoefficientRing =>kk)
-    R=ring(X)
-    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2)
-    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2,R_0^8*R_4-R_0*R_1^6*R_3*R_2)
-    isMultiHomogeneous(I)
-    
-    --Check Reqired Assumtions 
-    length(primaryDecomposition ideal X)==(#(rays(X))-dim(X))
-    for i from 0 to #(rays(X))-1 list isNef X_i
-    --or 
-    CheckToricVarietyValid(X)   
-     
-    time Segre(X,I)
-    time CSM(X,I)
+    kk=ZZ/32749
+    X=projectiveSpace(4,CoefficientRing =>kk)**projectiveSpace(2,CoefficientRing =>kk);
+    R=ring X;
+    I=ideal((17*R_0-3*R_1+9*R_3)*R_5*R_7,(5*R_1-3*R_4+R_3)*R_7^2,(7*R_2-4*R_1+12*R_3)*R_5^2)
+    time s=Segre(X,I)
+    time CSM(X,I)    
 ///
 
----------
+---------------------------------
+--Example 3.7 from pg. 24
 --
---Prod of P^n's
---------------
+---------------------------------
+--EX. 3.7
+TEST ///
+{*
+    restart
+    needsPackage "ToricSubschemeChar"
+    needsPackage "NormalToricVarieties"
+*}
+    kk=ZZ/32749
+    W = smoothFanoToricVariety(4,7,CoefficientRing=>kk)
+    R=ring W
+    K=ideal((R_4^9*R_3-15*R_5^5*R_3^5)*R_2^3,(R_5^7*R_3*R_5^2+5*R_4^5*R_3^5)*R_2*R_1^2)
+    codim K 
+    ideal mingens K
+    time s=Segre(W,K)
+///
 
-----------------------------------
---Tests of Segre
+---------------------------------
+--Examples from:
+--Table 5.1
 --
 ---------------------------------
 
@@ -164,15 +175,52 @@ TEST ///
     degrees I
     time Segre(X,I)
 ///
+
+--EX. 10
+TEST ///
+{*
+    restart
+    needsPackage "ToricSubschemeChar"
+    needsPackage "NormalToricVarieties"
+*}
+    Rho = {{1,0,0},{0,1,0},{0,0,1},{-1,-1,0},{0,0,-1}}
+    Sigma = {{0,1,2},{1,2,3},{0,2,3},{0,1,4},{1,3,4},{0,3,4}}
+    kk=ZZ/32749;
+    X = normalToricVariety(Rho,Sigma,CoefficientRing =>kk)
+    R=ring(X)
+    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2)
+    isMultiHomogeneous(I)  
+    time Segre(X,I)
+///
+
+--EX. 11
+TEST ///
+{*
+    restart
+    needsPackage "ToricSubschemeChar"
+    needsPackage "NormalToricVarieties"
+*}
+    Rho = {{1,0,0},{0,1,0},{0,0,1},{-1,-1,0},{0,0,-1}}
+    Sigma = {{0,1,2},{1,2,3},{0,2,3},{0,1,4},{1,3,4},{0,3,4}}
+    kk=ZZ/32749;
+    X = normalToricVariety(Rho,Sigma,CoefficientRing =>kk)
+    R=ring(X)
+    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2,R_0^8*R_4-R_0*R_1^6*R_3*R_2)
+    isMultiHomogeneous(I)  
+    time Segre(X,I)
+///
+
 --------------
---End Segre Exs
+--End Segre Exs from Table 5.1
 --
 -------------
 
-
 ---------------------------------
---Multi-Projjective Csm
------------------------
+--Examples from:
+--Table 5.2
+--
+---------------------------------
+
 --Ex. 1
 TEST ///
 {*
@@ -249,20 +297,54 @@ TEST ///
     X=projectiveSpace(2,CoefficientRing =>kk)**projectiveSpace(2,CoefficientRing =>kk)**projectiveSpace(3,CoefficientRing =>kk);
     R=ring X;
     I=ideal((R_0*R_1-R_2^2)*R_4,R_5*(R_6^2-R_7*R_6),R_0*R_3^2)
-    K=ideal(I_0*I_1*I_2)
     codim I
     time CSM(X,I)
-    time CSM(X,K)
-
 ///
 
 
+--EX. 6
+TEST ///
+{*
+    restart
+    needsPackage "ToricSubschemeChar"
+    needsPackage "NormalToricVarieties"
+*}
+    Rho = {{1,0,0},{0,1,0},{0,0,1},{-1,-1,0},{0,0,-1}}
+    Sigma = {{0,1,2},{1,2,3},{0,2,3},{0,1,4},{1,3,4},{0,3,4}}
+    kk=ZZ/32749;
+    X = normalToricVariety(Rho,Sigma,CoefficientRing =>kk)
+    R=ring(X)
+    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2)
+    time CSM(X,I)
+///
 
+--EX. 7
+TEST ///
+{*
+    restart
+    needsPackage "ToricSubschemeChar"
+    needsPackage "NormalToricVarieties"
+*}
+    Rho = {{1,0,0},{0,1,0},{0,0,1},{-1,-1,0},{0,0,-1}}
+    Sigma = {{0,1,2},{1,2,3},{0,2,3},{0,1,4},{1,3,4},{0,3,4}}
+    kk=ZZ/32749;
+    X = normalToricVariety(Rho,Sigma,CoefficientRing =>kk)
+    R=ring(X)
+    I=ideal(R_0^4*R_1,R_0*R_3*R_4*R_2-R_2^2*R_0^2,R_0^8*R_4-R_0*R_1^6*R_3*R_2)
+    time CSM(X,I)
+///
 
-
-------------------------------------------
+----------------------------------
+--End csm examples from Table 5.2
 --
---CSM complete intersection examples
+----------------------------------
+
+
+
+---------------------------------
+--Examples from:
+--Table 5.3
+--
 -----------------------------------------
 
 --Ex. 1
@@ -278,11 +360,8 @@ TEST ///
     A=ChowRing(R);
     I=ideal(random({1,1},R),random({1,1},R),R_1*R_0*R_3-R_0^2*R_4);
     csm=time CSM(X,I)
-    csm2=time CSM(X,I,Method=>DirectCompleteInt)
-    
-
+    csm2=time CSM(X,I,Method=>DirectCompleteInt)   
 ///
-
 
 --Ex. 2
 TEST ///
@@ -313,10 +392,9 @@ TEST ///
     A=ChowRing(R);
     I=ideal(random({2,1,0},R),random({0,0,1},R),R_2*R_6-7*R_0*R_7);
     csm=time CSM(X,I)
-    csm2=time CSM(X,I,Method=>DirectCompleteInt)
-    
-   
+    csm2=time CSM(X,I,Method=>DirectCompleteInt)   
 ///
+
 --Ex. 4
 TEST ///
 {*
@@ -331,9 +409,9 @@ TEST ///
     I=ideal(random({2,1,0},R),R_2*R_5-7*R_0*R_6);
     csm=time CSM(X,I)
     csm2=time CSM(X,I,Method=>DirectCompleteInt)   
-   
 ///
+
 ----------------------------------
---End csm examples
+--End csm examples from Table 5.3
 --
 ----------------------------------
